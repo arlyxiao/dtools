@@ -1,24 +1,14 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
+const { connection } = require('../connection');
+const db = connection();
 
 
-module.exports.createStore = () => {
-  const db = new Sequelize('testgraph', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-  
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000
-    },
-  
-  });
-
-  const users = db.define('user', {
+const userModel = () => {
+  return db.define('user', {
     id: { type: Sequelize.STRING, primaryKey: true},
     email: Sequelize.STRING,
     name: Sequelize.STRING
   });
-
-  return { users };
 };
+
+exports.userModel = userModel;
